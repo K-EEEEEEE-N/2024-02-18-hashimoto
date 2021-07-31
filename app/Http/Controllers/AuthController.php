@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,15 +15,8 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function postRegister(Request $request)
+    public function postRegister(RegisterRequest $request)
     {
-        $validate_rule = [
-            'name' => ['required'],
-            'email' => ['required','email'],
-            'password' => ['required','min:8','confirmed'],
-            'password_confirmation' => ['required']
-        ];
-        $this->validate($request, $validate_rule);
         try {
             User::create([
                 'name' => $request['name'],
@@ -40,13 +34,8 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function postLogin(Request $request)
+    public function postLogin(LoginRequest $request)
     {
-        $validate_rule = [
-            'email' => ['required','email'],
-            'password' => ['required','min:8'],
-        ];
-        $this->validate($request, $validate_rule);
         if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
             return redirect('/');
         } else {

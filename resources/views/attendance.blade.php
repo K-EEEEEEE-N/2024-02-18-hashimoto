@@ -14,7 +14,7 @@
         <th>休憩時間</th>
         <th>勤務時間</th>
     </tr>
-    @foreach ($attendances as $attendance)
+    @foreach ($adjustAttendances as $attendance)
     <tr>
         <td>{{ $attendance->users->name }}</td>
         <td>{{ $attendance->start_time }}</td>
@@ -24,6 +24,6 @@
     </tr>
     @endforeach
 </table>
-{{ $attendances->links('pagination::default') }}
+{{ $adjustAttendances->links('pagination::default') }}
 
 @endsection
